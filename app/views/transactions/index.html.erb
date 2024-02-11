@@ -2,6 +2,23 @@
 
 <!-- Step 1: List all transactions, starting with the ICO -->
 
+<% transactions = Transaction.all%>
+<p> There are <%=Transaction.count %> individual transactions</p>
+
+<ol>
+
+<% for transaction in transactions%>
+  <% username_from = User.find_by({"id" => transaction ["from_user_id"]}) %>
+  <% username_to = User.find_by({"id" => transaction ["to_user_id"]}) %>
+
+<li> 
+<%= transaction["id"]  %> <%= username_from["id"]  %> <%= username_to["id"]  %> <%= transaction["amount"]  %>
+
+</li>
+
+<%end%>
+</ol>
+
 <!-- Step 2: Calculate and display the balances -->
 
 <!-- 
