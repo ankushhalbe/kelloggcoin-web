@@ -24,15 +24,30 @@
 
 </li>
     <%end%>
-
-  
-  
-
 <%end%>
 </ol>
 
 <!-- Step 2: Calculate and display the balances -->
 
+<% users = User.all%>
+<p> There are <%=User.count %> users</p>
+
+<ol>
+
+<% for user in users%>
+
+<%
+trans_balance = 0 
+trans_balance1 = trans_balance + Transaction.where({"to_user_id" => user ["id"]}).sum("amount") 
+trans_balance2 = trans_balance1 - Transaction.where({"from_user_id" => user ["id"]}).sum("amount")
+%>
+
+<li>
+<p> Balance for <%= user["name"]%>: <%= trans_balance2%> KC </p>
+</li>
+<%end%>
+
+</ol>
 <!-- 
 Expected balances:
 Balance for Brian: 1348 KC
