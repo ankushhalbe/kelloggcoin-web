@@ -8,13 +8,25 @@
 <ol>
 
 <% for transaction in transactions%>
-  <% username_from = User.find_by({"id" => transaction ["from_user_id"]}) %>
-  <% username_to = User.find_by({"id" => transaction ["to_user_id"]}) %>
+  <% if transaction["from_user_id"] == nil %>
+    <!-- Dont display from_user -->
+      <% username_to = User.find_by({"id" => transaction ["to_user_id"]}) %>
+        <li> 
+        <%= transaction["id"]  %> -- <%= username_to["name"]  %> -- <%= transaction["amount"]  %>
+        </li>
+
+    <%elsif%>
+      <% username_from = User.find_by({"id" => transaction ["from_user_id"]}) %>
+      <% username_to = User.find_by({"id" => transaction ["to_user_id"]}) %>
 
 <li> 
-<%= transaction["id"]  %> <%= username_from["id"]  %> <%= username_to["id"]  %> <%= transaction["amount"]  %>
+<%= transaction["id"]  %> -- <%= username_from["name"]  %> --  <%= username_to["name"]  %> -- <%= transaction["amount"]  %>
 
 </li>
+    <%end%>
+
+  
+  
 
 <%end%>
 </ol>
